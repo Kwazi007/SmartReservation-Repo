@@ -36,23 +36,22 @@ import { DashboardsRoutingModule } from '../demo/components/dashboard/dashboard-
 import { CrudRoutingModule } from '../demo/components/pages/crud/crud-routing.module';
 import { ManageReportsComponent } from './manage-reports/manage-reports.component';
 import { ManageReservationsComponent } from './manage-reservations/manage-reservations.component';
+import { MenuModule } from 'primeng/menu';
 
 
 @NgModule({
   declarations: [
-    ManageReportsComponent,
-    ManageReservationsComponent
   ],
   imports: [
     CommonModule,
     MenuRoutingModule,
     FormsModule,
     ChartModule,
-    MenuModule,
     TableModule,
     StyleClassModule,
     PanelMenuModule,
     ButtonModule,
+    MenuModule,
     DashboardsRoutingModule,
     ToastModule,
     DialogModule,
@@ -83,4 +82,4 @@ import { ManageReservationsComponent } from './manage-reservations/manage-reserv
     ToggleButtonModule 
   ]
 })
-export class MenuModule { }
+export class MenusModule { }

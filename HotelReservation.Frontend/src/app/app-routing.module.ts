@@ -21,7 +21,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                     },
                     { 
                         path: 'menu', 
-                        loadChildren: () => import('./menu/menu.module').then(m => m.MenuModule)
+                        loadChildren: () => import('./menu/menu.module').then(m => m.MenusModule)
                     }
                 ]
             },

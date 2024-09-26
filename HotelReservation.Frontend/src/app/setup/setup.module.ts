@@ -42,9 +42,6 @@ import { ManageEmployeesComponent } from './manage-employees/manage-employees.co
 
 @NgModule({
   declarations: [
-    ManageCurrenciesComponent,
-    ManageEmployeesComponent,
-    ManageRoomsComponent
   ],
   imports: [
     CommonModule,
