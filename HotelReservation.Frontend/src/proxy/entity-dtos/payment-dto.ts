@@ -5,4 +5,7 @@ export interface PaymentDto extends FullAuditedEntityDto<number> {
     paymentMethod?: string
     currencyId?: number
     amount?: number
+    cardNo?: string
+    bank?: string
+    creditCardMachine?: string
 }

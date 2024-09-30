@@ -46,10 +46,12 @@ import { CrudRoutingModule } from './demo/components/pages/crud/crud-routing.mod
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
-    imports: [AppRoutingModule,
+    imports: [
+        AppRoutingModule,
          AppLayoutModule,
          DividerModule,
         FormsModule,
+        ToastModule,
         ReactiveFormsModule,
         RouterModule,
         ToastModule,

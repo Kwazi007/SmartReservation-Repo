@@ -1,5 +1,5 @@
 import { EntityDto } from "../entities/entity-dto";
 
-export interface CurrencyDto<T> extends EntityDto<T> {
+export interface CurrencyDto extends EntityDto<number> {
     name?: string
 }

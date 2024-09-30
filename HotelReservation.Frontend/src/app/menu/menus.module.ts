@@ -34,13 +34,13 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { DashboardsRoutingModule } from '../demo/components/dashboard/dashboard-routing.module';
 import { CrudRoutingModule } from '../demo/components/pages/crud/crud-routing.module';
-import { ManageReportsComponent } from './manage-reports/manage-reports.component';
 import { ManageReservationsComponent } from './manage-reservations/manage-reservations.component';
 import { MenuModule } from 'primeng/menu';
 
 
 @NgModule({
   declarations: [
+    ManageReservationsComponent
   ],
   imports: [
     CommonModule,
@@ -63,6 +63,7 @@ import { MenuModule } from 'primeng/menu';
     InputTextModule,
     InputTextareaModule,
     DropdownModule,
+    ToastModule,
     RadioButtonModule,
     InputNumberModule,
     CalendarModule,

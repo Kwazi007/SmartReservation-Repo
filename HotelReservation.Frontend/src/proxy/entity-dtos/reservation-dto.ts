@@ -1,5 +1,6 @@
 import { FullAuditedEntityDto } from "../entities/full-audited-entity-dto"
 import { Country } from "../enums/country"
+import { PaymentDto } from "./payment-dto"
 import { ReservationProductDto } from "./reservation-product-dto"
 
 export interface ReservationDto extends FullAuditedEntityDto<number>  {
@@ -16,4 +17,5 @@ export interface ReservationDto extends FullAuditedEntityDto<number>  {
     checkInDate?: Date
     checkOutDate?: Date
     reservationProduct?: ReservationProductDto[]
+    payments?: PaymentDto[]
 }
