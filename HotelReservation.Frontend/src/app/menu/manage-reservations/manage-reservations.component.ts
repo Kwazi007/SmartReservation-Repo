@@ -72,7 +72,7 @@ export class ManageReservationsComponent {
 
     this.reservationService.getAllList()
     .subscribe(res => {
-      this.reservations = res.data
+      this.reservations = res
       console.log('reservations:',this.reservations)
     })
 
@@ -106,6 +106,10 @@ export class ManageReservationsComponent {
     this.deleteSelectedReservation = id;
     this.deleteModal = true;
     this.submitted = false;
+  }
+
+  Save(){
+    console.log('new Reservation:',this.newReservation)
   }
 
   hideDialog(){}

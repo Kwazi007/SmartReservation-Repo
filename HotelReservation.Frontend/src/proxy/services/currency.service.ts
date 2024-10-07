@@ -5,15 +5,17 @@ import { ReservationDto } from '../entity-dtos/reservation-dto';
 import { ServiceResponse } from '../entity-dtos/service-response';
 import { CurrencyDto } from '../entity-dtos/currency-dto';
 
-const headers: HttpHeaders = new HttpHeaders()
-  .set('Content-Type', 'application/json, charset=utf-8');
+
+  const headers: HttpHeaders = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Accept', 'application/json');
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurrencyService {
 
-  baseUrl = environment;
+  baseUrl = "http://localhost:8080";
 
   //date = format(new Date(), 'yyyy-MM-dd');
 
@@ -25,28 +27,27 @@ export class CurrencyService {
   constructor(private http: HttpClient) { }
 
   create(itemDto: any) {
-    console.log(itemDto)
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.post<any>(`${this.baseUrl}/createCurrency`, body, { headers });
+    return this.http.post<CurrencyDto>(`${this.baseUrl}/currency`, body, { headers });
   }
 
   update(itemDto: any) {
     console.log(itemDto)
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.put<any>(`${this.baseUrl}/updateCurrency`, body, { headers });
+    return this.http.put<any>(`${this.baseUrl}/currency`, body, { headers });
   }
 
   delete(id: number) {
-    return this.http.delete<any>(`${this.baseUrl}/deleteCurrency/${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/currency/${id}`);
   }
 
   get(id: number) {
-    return this.http.get<any>(`${this.baseUrl}/getCurrency/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/currency/${id}`);
   }
 
   getAllList() {
-    return this.http.get<ServiceResponse<CurrencyDto[]>>(`${this.baseUrl}/getAllCurrencies`);
+    return this.http.get<CurrencyDto[]>(`${this.baseUrl}/currencies`);
   }
 }

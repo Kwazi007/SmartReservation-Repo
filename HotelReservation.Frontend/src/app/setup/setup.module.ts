@@ -38,21 +38,25 @@ import { DashboardsRoutingModule } from '../demo/components/dashboard/dashboard-
 import { CrudRoutingModule } from '../demo/components/pages/crud/crud-routing.module';
 import { ManageCurrenciesComponent } from './manage-currencies/manage-currencies.component';
 import { ManageEmployeesComponent } from './manage-employees/manage-employees.component';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
   declarations: [
+    ManageCurrenciesComponent,
+    ManageEmployeesComponent,
+    ManageRoomsComponent
   ],
   imports: [
     CommonModule,
     SetupRoutingModule,
     FormsModule,
     ChartModule,
-    MenuModule,
     TableModule,
     StyleClassModule,
     PanelMenuModule,
     ButtonModule,
+    MenuModule,
     DashboardsRoutingModule,
     ToastModule,
     DialogModule,
@@ -64,6 +68,7 @@ import { ManageEmployeesComponent } from './manage-employees/manage-employees.co
     InputTextModule,
     InputTextareaModule,
     DropdownModule,
+    ToastModule,
     RadioButtonModule,
     InputNumberModule,
     CalendarModule,

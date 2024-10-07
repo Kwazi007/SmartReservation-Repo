@@ -19,21 +19,21 @@
                             (click)="deleteSelected()">
                         </button> -->
                     </div>
-                        <div
-                            class="col-9 flex flex-column md:flex-row p-1 w-full gap-5"
-                        >
-                            <span class="block mt-2 md:mt-0 p-input-icon-left">
-                                <i class="pi pi-search"></i>
-                                <input
-                                    pInputText
-                                    type="text"
-                                    #filter
-                                    (input)="onGlobalFilter(dt1, $event)"
-                                    placeholder="Voucher No..."
-                                    class="w-full sm:w-auto"
-                                />
-                            </span>
-                        </div>
+                    <div
+                        class="col-9 flex flex-column md:flex-row p-1 w-full gap-5"
+                    >
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                #filter
+                                (input)="onGlobalFilter(dt1, $event)"
+                                placeholder="Voucher No..."
+                                class="w-full sm:w-auto"
+                            />
+                        </span>
+                    </div>
 
                     <div class="col-12">
                         <p-table
@@ -73,7 +73,7 @@
                                             width: 3rem;
                                         "
                                     >
-                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                        <p-tableheadercheckbox></p-tableheadercheckbox>
                                     </th>
                                     <th
                                         style="
@@ -100,15 +100,6 @@
                                             color: white;
                                         "
                                     >
-                                        Phone
-                                    </th>
-                                    <th
-                                        style="
-                                            font-size: larger;
-                                            background-color: grey;
-                                            color: white;
-                                        "
-                                    >
                                         CheckIn Date
                                     </th>
                                     <th
@@ -119,15 +110,6 @@
                                         "
                                     >
                                         CheckOut Date
-                                    </th>
-                                    <th
-                                        style="
-                                            font-size: larger;
-                                            background-color: grey;
-                                            color: white;
-                                        "
-                                    >
-                                        Total Pax
                                     </th>
                                     <th
                                         style="
@@ -147,21 +129,14 @@
                                     >
                                         Booked By
                                     </th>
-                                    <th
-                                        style="
-                                            font-size: larger;
-                                            background-color: grey;
-                                            color: white;
-                                        "
-                                    ></th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-reservation>
                                 <tr style="height: 0.25rem; font-size: 11px">
                                     <td>
-                                        <p-tableCheckbox
+                                        <p-tablecheckbox
                                             [value]="reservation"
-                                        ></p-tableCheckbox>
+                                        ></p-tablecheckbox>
                                     </td>
                                     <td style="width: 10%; min-width: 10rem">
                                         <span class="p-column-title"
@@ -173,12 +148,6 @@
                                         <span class="p-column-title">Name</span>
                                         {{ reservation.name }}
                                         {{ reservation.surname }}
-                                    </td>
-                                    <td style="width: 10%; min-width: 10rem">
-                                        <span class="p-column-title"
-                                            >Phone</span
-                                        >
-                                        {{ reservation.phone }}
                                     </td>
                                     <td style="width: 10%; min-width: 10rem">
                                         <span class="p-column-title"
@@ -199,24 +168,10 @@
                                         }}
                                     </td>
                                     <td style="width: 5%; min-width: 10rem">
-                                        <span class="p-column-title">Pax</span>
-                                        {{
-                                            reservation.adultPax +
-                                                reservation.childPax
-                                        }}
-                                    </td>
-                                    <td style="width: 5%; min-width: 10rem">
                                         <span class="p-column-title"
                                             >Amount</span
                                         >
                                         {{ reservation.totalAmount | currency }}
-                                    </td>
-
-                                    <td style="width: 15%; min-width: 10rem">
-                                        <span class="p-column-title"
-                                            >Bookked By</span
-                                        >
-                                        {{ reservation.creatorName }}
                                     </td>
                                     <td>
                                         <div class="flex">
@@ -258,9 +213,9 @@
                                 class="flex flex-column md:flex-row p-3 w-full"
                             >
                                 <div class="field col-12">
-                                    <p-tabView [(activeIndex)]="activeIndex">
+                                    <p-tabview [(activeIndex)]="activeIndex">
                                         <!-- booking details -->
-                                        <p-tabPanel header="Booking Details">
+                                        <p-tabpanel header="Booking Details">
                                             <br />
                                             <br />
                                             <div class="formgrid grid">
@@ -622,10 +577,10 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                        </p-tabPanel>
+                                        </p-tabpanel>
 
                                         <!-- Product details -->
-                                        <p-tabPanel
+                                        <p-tabpanel
                                             header="Product Details"
                                             [disabled]="
                                                 !newReservation.checkOutDate
@@ -925,11 +880,11 @@
                                                                         "
                                                                     >
                                                                         <td>
-                                                                            <p-tableCheckbox
+                                                                            <p-tablecheckbox
                                                                                 [value]="
                                                                                     product
                                                                                 "
-                                                                            ></p-tableCheckbox>
+                                                                            ></p-tablecheckbox>
                                                                         </td>
                                                                         <td>
                                                                             <p-button
@@ -1166,10 +1121,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </p-tabPanel>
+                                        </p-tabpanel>
 
                                         <!-- Payment details -->
-                                        <p-tabPanel header="Payment Details">
+                                        <p-tabpanel header="Payment Details">
                                             <br />
                                             <div class="formgrid grid">
                                                 <div
@@ -1451,7 +1406,7 @@
                                                                                     width: 3rem;
                                                                                 "
                                                                             >
-                                                                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                                                                <p-tableheadercheckbox></p-tableheadercheckbox>
                                                                             </th>
                                                                             <th
                                                                                 pSortableColumn="name"
@@ -1507,11 +1462,11 @@
                                                                             "
                                                                         >
                                                                             <td>
-                                                                                <p-tableCheckbox
+                                                                                <p-tablecheckbox
                                                                                     [value]="
                                                                                         payment
                                                                                     "
-                                                                                ></p-tableCheckbox>
+                                                                                ></p-tablecheckbox>
                                                                             </td>
                                                                             <td
                                                                                 style="
@@ -1696,44 +1651,24 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </p-tabPanel>
-                                    </p-tabView>
+                                        </p-tabpanel>
+                                    </p-tabview>
                                 </div>
                             </div>
                         </div>
                     </ng-template>
                     <ng-template pTemplate="footer">
                         <p-button
-                            label="Add Trip Account"
-                            icon="pi pi-plus"
-                            styleClass="p-button-success"
-                            [disabled]="!newReservation.agent"
-                            (click)="hideDialog()"
-                        ></p-button>
-                        <p-button
                             label="Save"
-                            icon="pi pi-check"
-                            styleClass="p-button-success"
-                            [disabled]="!newReservation.reservationProducts"
-                            (click)="hideDialog()"
-                        ></p-button>
-                        <p-button
-                            label="Save And Confirm"
                             icon="pi pi-check-circle"
                             styleClass="p-button-success"
-                            [disabled]="!agent"
-                            (click)="hideDialog()"
+                            [disabled]="!newReservation.checkOutDate"
+                            (click)="Save()"
                         ></p-button>
                         <p-button
                             label="Refresh"
                             icon="pi pi-replay"
                             styleClass="p-button-primary"
-                            (click)="hideDialog()"
-                        ></p-button>
-                        <p-button
-                            label="Close"
-                            icon="pi pi-minus"
-                            styleClass="p-button-danger"
                             (click)="hideDialog()"
                         ></p-button>
                     </ng-template>
@@ -1742,7 +1677,239 @@
                 <!-------------------------------------------------Edit Booking Modal----------------------------------->
 
                 <!-------------------------------------------------View Booking Modal----------------------------------->
-
+                <p-dialog
+                    [(visible)]="viewBookingModal"
+                    [style]="{ width: '1200px', height: '550px' }"
+                    [modal]="true"
+                    class="p-fluid"
+                >
+                    <p-fieldset legend="View Booking">
+                        <ng-template pTemplate="content">
+                            <div class="formgrid grid" style="font-size: 14px">
+                                <div class="field col-4">
+                                    <h4>Firstname:</h4>
+                                    <p style="color: rgb(5, 5, 95)">
+                                        {{ selectedReservation.name }}
+                                    </p>
+                                    <hr />
+                                    <h4>Email:</h4>
+                                    <p style="color: rgb(5, 5, 95)">
+                                        {{ selectedReservation.email }}
+                                    </p>
+                                    <hr />
+                                    <h4>Nationality:</h4>
+                                    <p style="color: rgb(5, 5, 95)">
+                                        {{ selectedReservation.country }}
+                                    </p>
+                                    <hr />
+                                </div>
+                                <div class="field col-4">
+                                    <h4>Last Name:</h4>
+                                    <p style="color: rgb(5, 5, 95)">
+                                        {{ selectedReservation.surname }}
+                                    </p>
+                                    <hr />
+                                    <h4>ID Number:</h4>
+                                    <p style="color: rgb(5, 5, 95)">
+                                        {{ selectedReservation.idNo }}
+                                    </p>
+                                    <hr />
+                                    <h4>CheckIn Date:</h4>
+                                    <p style="color: rgb(5, 5, 95)">
+                                        {{ selectedReservation.checkInDate | date : "MMMM d, y" }}
+                                    </p>
+                                    <hr />
+                                </div>
+                                <div class="field col-4">
+                                    <h4>Phone:</h4>
+                                    <p style="color: rgb(5, 5, 95)">
+                                        {{ selectedReservation.phone }}
+                                    </p>
+                                    <hr />
+                                    <h4>Address:</h4>
+                                    <p style="color: rgb(5, 5, 95)">
+                                        {{ selectedReservation.address }}
+                                    </p>
+                                    <hr />
+                                    <h4>Check Out Date:</h4>
+                                    <p style="color: rgb(5, 5, 95)">
+                                        {{ selectedReservation.checkOutDate | date : "MMMM d, y" }}
+                                    </p>
+                                    <hr />
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-fieldset>
+                    <br />
+                    <br />
+                    <p-fieldset legend="Products">
+                        <p-table
+                            [value]="selectedReservation.reservationProduct!"
+                            dataKey="id"
+                            styleClass="p-datatable-striped"
+                            [tableStyle]="{ 'min-width': '60rem' }"
+                            responsiveLayout="scroll"
+                            [(selection)]="selectedReservationProducts"
+                            selectionMode="multiple"
+                            [scrollable]="true"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr style="height: 0.25rem; font-size: 11px">
+                                    <th
+                                        style="
+                                            font-size: larger;
+                                            background-color: grey;
+                                            color: white;
+                                        "
+                                        pSortableColumn="name"
+                                        colspan="3"
+                                    >
+                                        Room Type
+                                    </th>
+                                    <th
+                                        style="
+                                            font-size: larger;
+                                            background-color: grey;
+                                            color: white;
+                                        "
+                                        pSortableColumn="cell"
+                                    >
+                                        Room No
+                                    </th>
+                                    <th
+                                        style="
+                                            font-size: larger;
+                                            background-color: grey;
+                                            color: white;
+                                        "
+                                        pSortableColumn="email"
+                                        colspan="2"
+                                    >
+                                        Adult Pax
+                                    </th>
+                                    <th
+                                        style="
+                                            font-size: larger;
+                                            background-color: grey;
+                                            color: white;
+                                        "
+                                        pSortableColumn="country"
+                                    >
+                                        Child Pax
+                                    </th>
+                                    <th
+                                        style="
+                                            font-size: larger;
+                                            background-color: grey;
+                                            color: white;
+                                        "
+                                        pSortableColumn="country"
+                                        colspan="2"
+                                    >
+                                        Unit Cost
+                                    </th>
+                                    <th
+                                        style="
+                                            font-size: larger;
+                                            background-color: grey;
+                                            color: white;
+                                        "
+                                        pSortableColumn="country"
+                                    >
+                                        Total Amount
+                                    </th>
+                                    <!-- <th></th> -->
+                                </tr>
+                            </ng-template>
+                            <!-- reservation products table body -->
+                            <ng-template
+                                pTemplate="body"
+                                let-product
+                                let-expanded="expanded"
+                            >
+                                <tr style="height: 0.25rem; font-size: 11px">
+                                    <td>
+                                        <p-tablecheckbox
+                                            [value]="product"
+                                        ></p-tablecheckbox>
+                                    </td>
+                                    <td>
+                                        <p-button
+                                            type="button"
+                                            pRipple
+                                            [pRowToggler]="product"
+                                            [text]="true"
+                                            [rounded]="true"
+                                            [plain]="true"
+                                            [icon]="
+                                                expanded
+                                                    ? 'pi pi-chevron-down'
+                                                    : 'pi pi-chevron-right'
+                                            "
+                                            *ngIf="
+                                                product.productType === 'Combo'
+                                            "
+                                        />
+                                    </td>
+                                    <td style="width: 30%; min-width: 10rem">
+                                        <span class="p-column-title"
+                                            >RRoom Type</span
+                                        >
+                                        {{ product.roomType }}
+                                    </td>
+                                    <td style="width: 5%; min-width: 10rem">
+                                        <span class="p-column-title">Room</span>
+                                        {{ product.roomNo }}
+                                    </td>
+                                    <td style="width: 5%; min-width: 10rem">
+                                        <span class="p-column-title"
+                                            >Adult Pax</span
+                                        >
+                                        {{ product.adultPax }}
+                                    </td>
+                                    <td style="width: 5%; min-width: 10rem">
+                                        <span class="p-column-title"
+                                            >child</span
+                                        >
+                                        {{ product.childPax }}
+                                    </td>
+                                    <td style="width: 5%; min-width: 8rem">
+                                        <span class="p-column-title"
+                                            >Unit Cost</span
+                                        >
+                                        {{ product.unitCost | currency }}
+                                    </td>
+                                    <td style="width: 10%; min-width: 10rem">
+                                        <span class="p-column-title"
+                                            >Total Amount</span
+                                        >
+                                        {{ product.totalAmount | currency }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="field">
+                            <div class="formgrid grid">
+                                <div class="col-11"></div>
+                                <div class="col-1">
+                                    <p-table>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <td>USD:</td>
+                                                <td>
+                                                    {{
+                                                        selectedReservation.amount
+                                                            | currency : "USD"
+                                                    }}
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                </p-dialog>
                 <!-------------------------------------------------Supervisor Booking Modal----------------------------------->
 
                 <!-------------------------------------------------Delete Selected Reservation Product Modal----------------------------------->

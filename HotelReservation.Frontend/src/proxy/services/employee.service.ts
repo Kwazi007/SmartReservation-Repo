@@ -5,15 +5,15 @@ import { ServiceResponse } from '../entity-dtos/service-response';
 import { EmployeeDto } from '../entity-dtos/employee-dto';
 
 const headers: HttpHeaders = new HttpHeaders()
-  .set('Content-Type', 'application/json, charset=utf-8');
+.set('Content-Type', 'application/json')
+.set('Accept', 'application/json');
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
 
-  baseUrl = environment;
-
+baseUrl = "http://localhost:8080";
   //date = format(new Date(), 'yyyy-MM-dd');
 
   dateModel = {
@@ -27,25 +27,25 @@ export class EmployeeService {
     console.log(itemDto)
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.post<any>(`${this.baseUrl}/createEmployee`, body, { headers });
+    return this.http.post<any>(`${this.baseUrl}/employee`, body, { headers });
   }
 
   update(itemDto: any) {
     console.log(itemDto)
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.put<any>(`${this.baseUrl}/updateEmployee`, body, { headers });
+    return this.http.put<any>(`${this.baseUrl}/employee`, body, { headers });
   }
 
   delete(id: number) {
-    return this.http.delete<any>(`${this.baseUrl}/deleteEmployee/${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/employee/${id}`);
   }
 
   get(id: number) {
-    return this.http.get<any>(`${this.baseUrl}/getEmployee/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/employee/${id}`);
   }
 
   getAllList() {
-    return this.http.get<ServiceResponse<EmployeeDto[]>>(`${this.baseUrl}/getAllEmployees`);
+    return this.http.get<EmployeeDto[]>(`${this.baseUrl}/employees`);
   }
 }

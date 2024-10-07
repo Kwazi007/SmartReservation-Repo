@@ -14,7 +14,7 @@ const headers: HttpHeaders = new HttpHeaders()
 
 export class ReservationService {
 
-  baseUrl = environment;
+  baseUrl = "http://localhost:8080/api/v1";
 
   //date = format(new Date(), 'yyyy-MM-dd');
 
@@ -54,6 +54,6 @@ export class ReservationService {
   }
 
   getAllList() {
-    return this.http.get<ServiceResponse<ReservationDto[]>>(`${this.baseUrl}/getAllBookings`);
+    return this.http.get<ReservationDto[]>(`${this.baseUrl}/reservation`);
   }
 }

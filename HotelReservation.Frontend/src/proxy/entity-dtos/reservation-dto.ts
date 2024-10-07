@@ -4,14 +4,14 @@ import { PaymentDto } from "./payment-dto"
 import { ReservationProductDto } from "./reservation-product-dto"
 
 export interface ReservationDto extends FullAuditedEntityDto<number>  {
-    name?: string
-    surname?: string
+    firstName?: string
+    lastName?: string
     phone?: string
     email?: string
     idNo?: string
     address?: string
     country?: Country
-    totalAmount?: Date
+    totalAmount?: number
     adultPax?: number
     childPax?: number
     checkInDate?: Date

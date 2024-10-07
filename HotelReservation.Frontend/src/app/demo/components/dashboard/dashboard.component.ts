@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         this.reservationService.getAllList()
         .subscribe(res => {
-            this.reservations = res.data
+            this.reservations = res
             let currentReservation = this.reservations.filter(x => new Date(x.checkInDate) <= new Date() && new Date(x.checkOutDate) >= new Date())
             currentReservation.forEach(res => {
                 this.guests += res.adultPax + res.childPax

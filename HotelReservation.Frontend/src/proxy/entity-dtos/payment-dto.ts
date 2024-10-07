@@ -7,5 +7,4 @@ export interface PaymentDto extends FullAuditedEntityDto<number> {
     amount?: number
     cardNo?: string
     bank?: string
-    creditCardMachine?: string
 }

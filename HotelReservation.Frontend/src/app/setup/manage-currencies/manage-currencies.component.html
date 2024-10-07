@@ -1,1 +1,164 @@
-<p>manage-currencies works!</p>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <div class="grid">
+                <div class="col-12">
+                    <button pButton label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                        (click)="create()"></button>
+                    <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+                        (click)="deleteSelected()"></button>
+                </div>
+                <div class="col-12">
+                    <p-table #dt [value]="currencies" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                        [globalFilterFields]="['name']" [rows]="10" [paginator]="true"
+                        [rowsPerPageOptions]="[10, 20, 30]" [showCurrentPageReport]="true"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        selectionMode="multiple" [rowHover]="true" dataKey="id">
+                        <ng-template pTemplate="caption">
+                            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                                <h5 class="m-0">Manage Currencies</h5>
+                                <span class="block mt-2 md:mt-0 p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)"
+                                        placeholder="Search..." class="w-full sm:w-auto" />
+                                </span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr style="height: 0.25rem; font-size: 12px">
+                                <th style="width: 3rem" style="font-size: larger; background-color: grey; color: white;">
+                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                </th>
+                                <th pSortableColumn="name" style="font-size: larger; background-color: grey; color: white;">
+                                    Id <p-sortIcon field="name"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="name" style="font-size: larger; background-color: grey; color: white;">
+                                    Name <p-sortIcon field="name"></p-sortIcon>
+                                </th>
+                                <th style="font-size: larger; background-color: grey; color: white;"></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-currency>
+                            <tr style="height: 0.25rem; font-size: 11px">
+                                <td>
+                                    <p-tableCheckbox [value]="currency"></p-tableCheckbox>
+                                </td>
+                                <td style="width: 16.666%; min-width: 10rem">
+                                    <span class="p-column-title">Id</span>
+                                    {{ currency.id }}
+                                </td>
+                                <td style="width: 16.666%; min-width: 10rem">
+                                    <span class="p-column-title">Name</span>
+                                    {{ currency.name }}
+                                </td>
+                                <td style="font-size: 4%">
+                                    <div class="flex">
+                                        <button pButton pRipple icon="pi pi-pencil"
+                                            class="p-button-rounded p-button-success mr-2"
+                                            (click)="edit(currency)"></button>
+                                        <button pButton pRipple icon="pi pi-trash"
+                                            class="p-button-rounded p-button-danger"
+                                            (click)="delete(currency.id)"></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <!-- create modal -->
+            <p-dialog [(visible)]="createModal" [style]="{ width: '20%' }" [modal]="true" class="p-fluid">
+                <p-fieldset legend="New currency">
+                    <ng-template pTemplate="content">
+                        <div class="p-fluid p-formgrid grid">
+                            <div class="field col-12 md:col-12">
+                                <span class="p-float-label">
+                                    <input pInputText id="name" [(ngModel)]="newCurrency.name" required autofocus
+                                        [ngClass]="{
+                                            'ng-invalid ng-dirty':
+                                                submitted &&
+                                                !newCurrency.name
+                                        }" />
+                                    <label htmlFor="name">Name</label>
+                                </span>
+                                <small class="ng-dirty ng-invalid" style="color: red"
+                                    *ngIf="submitted && !newCurrency.name">Item name is required.</small>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-fieldset>
+                <ng-template pTemplate="footer">
+                    <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-danger"
+                        (click)="hideDialog()"></p-button>
+                    <p-button label="Save" icon="pi pi-check" styleClass="p-button-success" (click)="save()"
+                        [disabled]="!newCurrency.name "></p-button>
+                </ng-template>
+            </p-dialog>
+
+            <!-- edit modal -->
+            <p-dialog [(visible)]="editModal" [style]="{ width: '20%' }" [modal]="true" class="p-fluid">
+                <p-fieldset legend="Edit currencies">
+                    <ng-template pTemplate="content">
+                        <div class="p-fluid p-formgrid grid">
+                            <div class="field col-12 md:col-12">
+                                <span class="p-float-label">
+                                    <input pInputText id="name" [(ngModel)]="selectedCurrency.name" required
+                                        autofocus [ngClass]="{
+                                            'ng-invalid ng-dirty':
+                                                submitted &&
+                                                !selectedCurrency.name
+                                        }" />
+                                    <label htmlFor="name">Name</label>
+                                </span>
+                                <small class="ng-dirty ng-invalid" style="color: red" *ngIf="
+                                        submitted && !selectedCurrency.name
+                                    ">Item name is required.</small>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-fieldset>
+
+                <ng-template pTemplate="footer">
+                    <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-danger"
+                        (click)="hideDialog()"></p-button>
+                    <p-button label="Update" icon="pi pi-check" styleClass="p-button-success" (click)="update()"
+                        [disabled]="!selectedCurrency.name"></p-button>
+                </ng-template>
+            </p-dialog>
+
+            <!-- view Rate Type-->
+            <p-dialog [(visible)]="viewModal" [style]="{ width: '10%' }" [modal]="true" class="p-fluid">
+                <p-fieldset legend="View currencies">
+                    <ng-template pTemplate="content">
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <h5>Name:</h5>
+                                <p>{{ selectedCurrency.name }}</p>
+                                <hr/>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-fieldset>
+                <ng-template pTemplate="footer">
+                    <p-button label="Close" icon="pi pi-times" styleClass="p-button-danger"
+                        (click)="hideDialog()"></p-button>
+                </ng-template>
+            </p-dialog>
+            <!-- delete moadal -->
+            <p-dialog [(visible)]="deleteModal" header="Confirm" [modal]="true" [style]="{ width: '450px' }">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span *ngIf="selectedCurrency">Are you sure you want to delete
+                        <b>{{ selectedCurrency.name }}</b>?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <p-button icon="pi pi-times" styleClass="p-button-primary" label="No"
+                        (click)="deleteModal = false"></p-button>
+                    <p-button icon="pi pi-check" styleClass="p-button-danger" label="Yes"
+                        (click)="confirmDelete(deleteSelectedCurrency)"></p-button>
+                </ng-template>
+            </p-dialog>
+        </div>
+    </div>
+</div>
