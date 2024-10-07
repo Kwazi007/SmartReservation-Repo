@@ -6,7 +6,8 @@ import { environment } from 'src/environments/environment';
 import { ServiceResponse } from '../entity-dtos/service-response';
 
 const headers: HttpHeaders = new HttpHeaders()
-  .set('Content-Type', 'application/json, charset=utf-8');
+.set('Content-Type', 'application/json')
+.set('Accept', 'application/json');
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ const headers: HttpHeaders = new HttpHeaders()
 
 export class ReservationService {
 
-  baseUrl = "http://localhost:8080/api/v1";
+  baseUrl = "http://localhost:8080";
 
   //date = format(new Date(), 'yyyy-MM-dd');
 
@@ -28,32 +29,32 @@ export class ReservationService {
   createPayment(itemDto: any) {
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.post<any>(`${this.baseUrl}/createPayment`, body, { headers });
+    return this.http.post<any>(`${this.baseUrl}/payment`, body, { headers });
   }
 
   create(itemDto: any) {
     console.log(itemDto)
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.post<any>(`${this.baseUrl}/createBooking`, body, { headers });
+    return this.http.post<any>(`${this.baseUrl}/reservation`, body, { headers });
   }
 
   update(itemDto: any) {
     console.log(itemDto)
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.put<any>(`${this.baseUrl}/updateBooking`, body, { headers });
+    return this.http.put<any>(`${this.baseUrl}/reservation`, body, { headers });
   }
 
   delete(id: number) {
-    return this.http.delete<any>(`${this.baseUrl}/deleteBooking/${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/reservation/${id}`);
   }
 
   get(id: number) {
-    return this.http.get<any>(`${this.baseUrl}/getBooking/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/reservation/${id}`);
   }
 
   getAllList() {
-    return this.http.get<ReservationDto[]>(`${this.baseUrl}/reservation`);
+    return this.http.get<ReservationDto[]>(`${this.baseUrl}/reservations`);
   }
 }

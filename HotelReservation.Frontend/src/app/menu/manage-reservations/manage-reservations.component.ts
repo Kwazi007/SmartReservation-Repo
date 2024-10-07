@@ -34,7 +34,13 @@ export class ManageReservationsComponent {
 
   discount = 0
 
+  totalUSD = 0
+
   vat = 0
+
+  checkInDate: Date
+
+  checkOutDate: Date
 
   totalAmountPaid = 0
 
@@ -55,6 +61,8 @@ export class ManageReservationsComponent {
   editBookingModal = false;
 
   deleteModal = false;
+
+  activeIndex: number = 0;
 
   submitted = false;
 
@@ -78,7 +86,7 @@ export class ManageReservationsComponent {
 
     this.roomService.getAllList()
     .subscribe(res => {
-      this.rooms = res.data
+      this.rooms = res
       console.log('rooms',this.rooms)
     })
   }
@@ -87,6 +95,25 @@ export class ManageReservationsComponent {
     this.newReservation = {} as ReservationDto;
     this.createBookingModal = true;
     this.submitted = false;
+  }
+
+  addProduct(){
+    this.newReservationProduct.reservation_Id = 0
+    this.newReservationProduct.roomNo = this.newReservationProduct.room.id
+    this.newReservationProduct.unitPrice = this.newReservationProduct.room.rate
+    this.newReservationProduct.totalAmount = ((this.newReservationProduct.adultPax * this.newReservationProduct.unitPrice)+(this.newReservationProduct.childPax*this.newReservationProduct.unitPrice))
+    this.totalUSD += this.newReservationProduct.totalAmount
+    console.log('res products:',this.newReservationProduct)
+    if (!Array.isArray(this.newReservation.reservationProducts)) {
+      this.newReservation.reservationProducts = [];
+    }
+  this.newReservation.reservationProducts = [... this.newReservation.reservationProducts!, this.newReservationProduct];
+  console.log('products:',this.newReservation.reservationProducts)
+  this.newReservationProduct = {}
+  }
+
+  clearProducts(){
+    this.newReservationProduct = {}
   }
 
   view(reservation: ReservationDto) {
@@ -109,10 +136,91 @@ export class ManageReservationsComponent {
   }
 
   Save(){
-    console.log('new Reservation:',this.newReservation)
+    this.newReservation.adultPax = 0
+    this.newReservation.childPax = 0
+    this.newReservation.totalAmount = 0
+    this.newReservation.reservationProducts.forEach(res => {
+      this.newReservation.adultPax += res.adultPax
+      this.newReservation.childPax += res.childPax
+      this.newReservation.totalAmount += res.totalAmount
+    })
+    console.log('res:',this.newReservation)
+    this.submitted = true;
+    
+    this.reservationService.create(this.newReservation)
+    .subscribe((res) => {
+      console.log(res);
+
+
+        this.reservations = [...this.reservations, res];
+
+        this.messageService.add({
+          severity:'success', 
+          summary: 'Success', 
+          life: 3000
+        });
+    },
+    (error) => {
+      this.messageService.add({
+        severity:'error', 
+        summary: 'Error', 
+        detail: error.message, 
+        life: 3000});
+    });
+
+    this.newReservation = {} as ReservationDto;
+    this.hideDialog();
   }
 
-  hideDialog(){}
+  update() {
+    this.submitted = true;
+    this.selectedReservation.checkInDate = this.checkInDate.toISOString()
+    this.selectedReservation.checkOutDate = this.checkOutDate.toISOString()
+  
+    this.reservationService.update(this.selectedReservation)
+      .subscribe(
+        res => {
+          console.log(res);
+  
+          // Find the index of the employee we want to update
+          const index = this.reservations.findIndex(x => x.id === this.selectedReservation.id);
+  
+          // Remove the old employee from the array
+          this.reservations.splice(index, 1);
+  
+          // Push the updated employee into the array
+          this.reservations = [...this.reservations, res];
+  
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: res.message,
+            life: 3000
+          });
+        },
+        error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.message,
+            life: 3000
+          });
+        }
+      );
+  
+    // Reset the selected employee
+    this.selectedReservation = {} as ReservationDto;
+  
+    // Hide the dialog
+    this.hideDialog();
+  }
+
+  hideDialog(){
+    this.deleteModal = false;
+    this.createBookingModal = false;
+    this.editBookingModal = false;
+    this.viewBookingModal = false;
+  }
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');

@@ -21,6 +21,8 @@ export class ManageEmployeesComponent {
 
   selectedEmployee: EmployeeDto = {} as EmployeeDto
 
+  editDate: Date
+
   roles: Roles[] = []
 
   createModal: any
@@ -59,6 +61,7 @@ export class ManageEmployeesComponent {
 
   edit(employee: EmployeeDto){
     this.selectedEmployee = { ...employee};
+    this.editDate = new Date(this.selectedEmployee.dateJoined)
     this.editModal = true;
     this.submitted = false;
   }
@@ -78,23 +81,40 @@ export class ManageEmployeesComponent {
   deleteSelected(){
   }
 
-   confirmDelete(id:number){
+  confirmDelete(id: number) {
     this.employeeService.delete(id)
-    .subscribe((res) => {
-      console.log(res);
-      if(res.isSuccess){
-        this.messageService.add({severity:'success', summary: 'Success', detail: res.message , life: 3000});
-      }
-      else{
-        this.messageService.add({severity:'error', summary: 'Error', detail: res.message , life: 3000});
-      }
-    },
-    (error) => {
-      this.messageService.add({severity:'error', summary: 'Error', detail: error.message, life: 3000});
-    });
-
+      .subscribe(
+        res => {
+          console.log(res);
+  
+          // Find the index of the employee we want to delete
+          const index = this.employees.findIndex(x => x.id === id);
+  
+          // Remove the deleted employee from the array
+          if (index !== -1) {
+            this.employees.splice(index, 1);
+          }
+  
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: res.message,
+            life: 3000
+          });
+        },
+        error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.message,
+            life: 3000
+          });
+        }
+      );
+  
     this.hideDialog();
   }
+  
 
   hideDialog(){
     this.viewModal = false;
@@ -132,37 +152,49 @@ export class ManageEmployeesComponent {
     this.hideDialog();
   }
 
-  update(){
+  update() {
     this.submitted = true;
-
+    this.selectedEmployee.dateJoined = this.editDate.toISOString()
+    console.log('date',this.selectedEmployee.dateJoined)
+  
     this.employeeService.update(this.selectedEmployee)
-    .subscribe((res) => {
-      console.log(res);
-
-        var index = this.employees.findIndex(x => x.id === this.selectedEmployee.id);
+      .subscribe(
+        res => {
+          console.log(res);
+  
+          // Find the index of the employee we want to update
+          const index = this.employees.findIndex(x => x.id === this.selectedEmployee.id);
+  
+          // Remove the old employee from the array
           this.employees.splice(index, 1);
-
+  
+          // Push the updated employee into the array
           this.employees = [...this.employees, res];
-
-        this.messageService.add({
-          severity:'success', 
-          summary: 'Success', 
-          detail: res.message , 
-          life: 3000
-        });
-    },
-    (error) => {
-      this.messageService.add({
-        severity:'error', 
-        summary: 'Error', 
-        detail: error.message, 
-        life: 3000});
-    });
-
+  
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: res.message,
+            life: 3000
+          });
+        },
+        error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.message,
+            life: 3000
+          });
+        }
+      );
+  
+    // Reset the selected employee
     this.selectedEmployee = {} as EmployeeDto;
-
+  
+    // Hide the dialog
     this.hideDialog();
   }
+  
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');

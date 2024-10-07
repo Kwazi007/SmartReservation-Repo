@@ -133,27 +133,35 @@ export class ManageCurrenciesComponent {
     this.submitted = true;
 
     this.currencyService.update(this.selectedCurrency)
-    .subscribe((res) => {
-      console.log(res);
+    .subscribe(
+      res => {
+        console.log(res);
 
-        var index = this.currencies.findIndex(x => x.id === this.selectedCurrency.id);
-          this.currencies.splice(index, 1);
+        // Find the index of the employee we want to update
+        const index = this.currencies.findIndex(x => x.id === this.selectedCurrency.id);
 
-          this.currencies = [...this.currencies, res];
+        // Remove the old employee from the array
+        this.currencies.splice(index, 1);
+
+        // Push the updated employee into the array
+        this.currencies = [...this.currencies, res];
 
         this.messageService.add({
-          severity:'success', 
-          summary: 'Success',  
+          severity: 'success',
+          summary: 'Success',
+          detail: res.message,
           life: 3000
         });
-    },
-    (error) => {
-      this.messageService.add({
-        severity:'error', 
-        summary: 'Error', 
-        detail: error.message, 
-        life: 3000});
-    });
+      },
+      error => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message,
+          life: 3000
+        });
+      }
+    );
 
     this.selectedCurrency = {} as CurrencyDto;
 

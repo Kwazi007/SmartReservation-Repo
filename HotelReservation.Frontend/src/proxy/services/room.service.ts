@@ -12,7 +12,7 @@ const headers: HttpHeaders = new HttpHeaders()
 })
 export class RoomService {
 
-  baseUrl = environment;
+  baseUrl = "http://localhost:8080";
 
   //date = format(new Date(), 'yyyy-MM-dd');
 
@@ -27,25 +27,25 @@ export class RoomService {
     console.log(itemDto)
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.post<any>(`${this.baseUrl}/createRoom`, body, { headers });
+    return this.http.post<any>(`${this.baseUrl}/room`, body, { headers });
   }
 
   update(itemDto: any) {
     console.log(itemDto)
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.put<any>(`${this.baseUrl}/updateRoom`, body, { headers });
+    return this.http.put<any>(`${this.baseUrl}/room`, body, { headers });
   }
 
   delete(id: number) {
-    return this.http.delete<any>(`${this.baseUrl}/deleteRoom/${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/room/${id}`);
   }
 
   get(id: number) {
-    return this.http.get<any>(`${this.baseUrl}/getRoom/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/room/${id}`);
   }
 
   getAllList() {
-    return this.http.get<ServiceResponse<RoomDto[]>>(`${this.baseUrl}/getAllRooms`);
+    return this.http.get<RoomDto[]>(`${this.baseUrl}/rooms`);
   }
 }

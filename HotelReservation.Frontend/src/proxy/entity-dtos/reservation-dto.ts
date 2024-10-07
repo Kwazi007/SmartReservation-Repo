@@ -14,8 +14,8 @@ export interface ReservationDto extends FullAuditedEntityDto<number>  {
     totalAmount?: number
     adultPax?: number
     childPax?: number
-    checkInDate?: Date
-    checkOutDate?: Date
-    reservationProduct?: ReservationProductDto[]
+    checkInDate?: string
+    checkOutDate?: string
+    reservationProducts?: ReservationProductDto[]
     payments?: PaymentDto[]
 }

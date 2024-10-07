@@ -30,8 +30,8 @@
                                 <th style="width: 3rem" style="font-size: larger; background-color: grey; color: white;">
                                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                 </th>
-                                <th pSortableColumn="name" style="font-size: larger; background-color: grey; color: white;">
-                                    Id <p-sortIcon field="name"></p-sortIcon>
+                                <th style="width: 1rem" style="font-size: larger; background-color: grey; color: white;">
+                                    Id
                                 </th>
                                 <th pSortableColumn="name" style="font-size: larger; background-color: grey; color: white;">
                                     Name <p-sortIcon field="name"></p-sortIcon>
@@ -53,7 +53,7 @@
                                 <td>
                                     <p-tableCheckbox [value]="employee"></p-tableCheckbox>
                                 </td>
-                                <td style="width: 16.666%; min-width: 10rem">
+                                <td style="width: 10%; min-width: 5rem">
                                     <span class="p-column-title">Id</span>
                                     {{ employee.id }}
                                 </td>
@@ -75,6 +75,9 @@
                                 </td>
                                 <td style="font-size: 4%">
                                     <div class="flex">
+                                        <button pButton pRipple icon="pi pi-eye"
+                                        class="p-button-rounded p-button-primary mr-2"
+                                        (click)="view(employee)"></button>
                                         <button pButton pRipple icon="pi pi-pencil"
                                             class="p-button-rounded p-button-success mr-2"
                                             (click)="edit(employee)"></button>
@@ -90,7 +93,7 @@
             </div>
             <!-- create modal -->
             <p-dialog [(visible)]="createModal" [style]="{ width: '60%' }" [modal]="true" class="p-fluid">
-                <p-fieldset legend="New employee">
+                <p-fieldset legend="New Employee">
                     <ng-template pTemplate="content">
                         <div class="formgrid grid">
                             <div class="field col-12">
@@ -221,39 +224,125 @@
             </p-dialog>
 
             <!-- edit modal -->
-            <p-dialog [(visible)]="editModal" [style]="{ width: '20%' }" [modal]="true" class="p-fluid">
-                <p-fieldset legend="Edit employees">
+            <p-dialog [(visible)]="editModal" [style]="{ width: '60%' }" [modal]="true" class="p-fluid">
+                <p-fieldset legend="Edit Employee">
                     <ng-template pTemplate="content">
-                        <div class="p-fluid p-formgrid grid">
-                            <div class="field col-12 md:col-12">
-                                <span class="p-float-label">
-                                    <input pInputText id="name" [(ngModel)]="selectedEmployee.name" required
-                                        autofocus [ngClass]="{
-                                            'ng-invalid ng-dirty':
-                                                submitted &&
-                                                !selectedEmployee.name
-                                        }" />
-                                    <label htmlFor="name">Name</label>
-                                </span>
-                                <small class="ng-dirty ng-invalid" style="color: red" *ngIf="
-                                        submitted && !selectedEmployee.name
-                                    ">Item name is required.</small>
-                            </div>
-                            <div class="field col-12 md:col-6">
-                                <span class="p-float-label">
-                                    <input pInputText id="description" [(ngModel)]="
-                                            selectedEmployee.id
-                                        " required autofocus [ngClass]="{
-                                            'ng-invalid ng-dirty':
-                                                submitted &&
-                                                !selectedEmployee.id
-                                        }" />
-                                    <label htmlFor="name">Id</label>
-                                </span>
-                                <small class="ng-dirty ng-invalid" style="color: red" *ngIf="
-                                        submitted &&
-                                        !selectedEmployee.id
-                                    ">Item id is required.</small>
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <div class="flex flex-column md:flex-row p-3 w-full">
+                                    <div class="field col-6">
+                                        <div class="field">
+                                            <span class="p-float-label">
+                                                <input pInputText id="name" [(ngModel)]="selectedEmployee.firstName" required autofocus
+                                                    [ngClass]="{
+                                                        'ng-invalid ng-dirty':
+                                                            submitted &&
+                                                            !selectedEmployee.firstName
+                                                    }" />
+                                                <label htmlFor="name">Name</label>
+                                            </span>
+                                            <small class="ng-dirty ng-invalid" style="color: red"
+                                                *ngIf="submitted && !selectedEmployee.firstName">Item name is required.</small>
+                                        </div>
+                                        <br>
+                                        <div class="field">
+                                            <span class="p-float-label">
+                                                <input pInputText id="surname" [(ngModel)]="selectedEmployee.lastName" required autofocus
+                                                    [ngClass]="{
+                                                        'ng-invalid ng-dirty':
+                                                            submitted &&
+                                                            !selectedEmployee.lastName
+                                                    }" />
+                                                <label htmlFor="name">Surname</label>
+                                            </span>
+                                            <small class="ng-dirty ng-invalid" style="color: red"
+                                                *ngIf="submitted && !selectedEmployee.lastName">Item name is required.</small>
+                                        </div>
+                                    </div>
+                                    <div class="field col-6">
+                                            <div class="field">
+                                                <span
+                                                    class="p-float-label"
+                                                >
+                                                    <p-dropdown
+                                                        appendTo="body"
+                                                        [(ngModel)]="
+                                                            selectedEmployee.role
+                                                        "
+                                                        [options]="
+                                                            roles
+                                                        "
+                                                        placeholder="Select Role"
+                                                    >
+                                                        <ng-template
+                                                            pTemplate="selectedRole"
+                                                        >
+                                                            <span
+                                                                *ngIf="
+                                                                    selectedEmployee &&
+                                                                    selectedEmployee.role
+                                                                "
+                                                                >{{
+                                                                    selectedEmployee.role
+                                                                }}
+                                                            </span>
+                                                        </ng-template>
+                                                        <ng-template
+                                                            let-option
+                                                            pTemplate="item"
+                                                        >
+                                                            <span>{{
+                                                                option
+                                                            }}</span>
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                    <small
+                                                        class="ng-dirty ng-invalid"
+                                                        style="
+                                                            color: red;
+                                                        "
+                                                        *ngIf="
+                                                            submitted &&
+                                                            !selectedEmployee.role
+                                                        "
+                                                    >
+                                                        Item name is
+                                                        required.
+                                                    </small>
+                                                    <label
+                                                        for="country"
+                                                    >
+                                                        Role</label
+                                                    >
+                                                </span>
+                                            </div>
+                                        <br>
+                                            <div class="field">
+                                                <span class="p-float-label">
+                                                    <p-calendar
+                                                        appendTo="body"
+                                                        [(ngModel)]="
+                                                            editDate
+                                                        "
+                                                        dateFormat="MM d, y"
+                                                    ></p-calendar>
+                                                    <small
+                                                        class="ng-dirty ng-invalid"
+                                                        *ngIf="
+                                                            submitted &&
+                                                            !selectedEmployee.dateJoined
+                                                        "
+                                                        >Date is
+                                                        required.</small
+                                                    >
+                                                    <label
+                                                        for="creationTime"
+                                                        >Date Joined</label
+                                                    >
+                                                </span>
+                                            </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </ng-template>
@@ -263,19 +352,44 @@
                     <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-danger"
                         (click)="hideDialog()"></p-button>
                     <p-button label="Update" icon="pi pi-check" styleClass="p-button-success" (click)="update()"
-                        [disabled]="!selectedEmployee.name"></p-button>
+                        [disabled]="!selectedEmployee.firstName"></p-button>
                 </ng-template>
             </p-dialog>
 
             <!-- view Rate Type-->
-            <p-dialog [(visible)]="viewModal" [style]="{ width: '10%' }" [modal]="true" class="p-fluid">
-                <p-fieldset legend="View employees">
+            <p-dialog [(visible)]="viewModal" [style]="{ width: '60%' }" [modal]="true" class="p-fluid">
+                <p-fieldset legend="View Employee">
                     <ng-template pTemplate="content">
                         <div class="formgrid grid">
                             <div class="field col-12">
-                                <h5>Name:</h5>
-                                <p>{{ selectedEmployee.name }}</p>
-                                <hr/>
+                                <div class="flex flex-column md:flex-row p-3 w-full">
+                                    <div class="field col-6">
+                                        <div class="field">
+                                            <h5>Name:</h5>
+                                            <p>{{ selectedEmployee.firstName }}</p>
+                                            <hr/>
+                                        </div>
+                                        <br>
+                                        <div class="field">
+                                            <h5>LastName:</h5>
+                                            <p>{{ selectedEmployee.lastName }}</p>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                    <div class="field col-6">
+                                        <div class="field">
+                                            <h5>Role:</h5>
+                                            <p>{{ selectedEmployee.role }}</p>
+                                            <hr/>
+                                        </div>
+                                        <br>
+                                        <div class="field">
+                                            <h5>Date Joined:</h5>
+                                            <p>{{ selectedEmployee.dateJoined }}</p>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </ng-template>
@@ -285,6 +399,8 @@
                         (click)="hideDialog()"></p-button>
                 </ng-template>
             </p-dialog>
+
+
             <!-- delete moadal -->
             <p-dialog [(visible)]="deleteModal" header="Confirm" [modal]="true" [style]="{ width: '450px' }">
                 <div class="flex align-items-center justify-content-center">
