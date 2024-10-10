@@ -94,13 +94,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.roomService.getAllList()
         .subscribe(res => {
             this.rooms = res
-            let bookedRoomsArray = this.rooms.filter(x => x.isBooked == true)
+            let bookedRoomsArray = this.rooms.filter(x => x.booked == true)
+            console.log('rooms:',this.rooms)
             this.bookedRooms = bookedRoomsArray.length
             this.deluxeRooms = (bookedRoomsArray.filter(x => x.roomType == RoomType.DOUBLEDELUXE || x.roomType == RoomType.SINGLEDELUXE)).length
-            let availableRoomsArray = this.rooms.filter(x => x.isBooked == false)
-            this.standardRooms = (bookedRoomsArray.filter(x => x.roomType == RoomType.DOUBLE || x.roomType == RoomType.SINGLE)).length
+            let availableRoomsArray = this.rooms.filter(x => x.booked == false)
+            this.standardRooms = (availableRoomsArray.filter(x => x.roomType == RoomType.DOUBLE || x.roomType == RoomType.SINGLE)).length
             this.availableRooms = availableRoomsArray.length
-            console.log('rooms:',this.rooms)
         })
 
         this.paymentService.getAllList()

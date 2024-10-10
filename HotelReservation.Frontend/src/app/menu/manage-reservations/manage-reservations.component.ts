@@ -98,8 +98,8 @@ export class ManageReservationsComponent {
   }
 
   addProduct(){
-    this.newReservationProduct.reservation_Id = 0
-    this.newReservationProduct.roomNo = this.newReservationProduct.room.id
+    this.newReservationProduct.reservationId = 0
+    this.newReservationProduct.roomId = this.newReservationProduct.room.id
     this.newReservationProduct.unitPrice = this.newReservationProduct.room.rate
     this.newReservationProduct.totalAmount = ((this.newReservationProduct.adultPax * this.newReservationProduct.unitPrice)+(this.newReservationProduct.childPax*this.newReservationProduct.unitPrice))
     this.totalUSD += this.newReservationProduct.totalAmount

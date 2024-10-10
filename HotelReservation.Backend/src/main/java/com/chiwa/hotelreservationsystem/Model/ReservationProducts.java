@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 
 @Data
 @AllArgsConstructor
@@ -17,6 +15,9 @@ public class ReservationProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private int roomId;
 
     @Column(nullable = false)
     private String roomType;
@@ -34,14 +35,20 @@ public class ReservationProducts {
     private double totalAmount;
 
     @ManyToOne
-    @JoinColumn(name = "reservation_id")
     @JsonIgnore
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    @JsonIgnore
-    private Room room;
+//    @Column(nullable = false)
+//    private int reservationId;
+//
+//    public int getReservationId() {
+//        return reservationId;
+//    }
+//
+//    public void setReservationId(int reservationId) {
+//        this.reservationId = reservationId;
+//    }
 
 //    @ManyToOne
 //    @JoinColumn(name = "course_id")

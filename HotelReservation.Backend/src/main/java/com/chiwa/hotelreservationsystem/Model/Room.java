@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,9 +26,6 @@ public class Room {
 
     @Column(nullable = false)
     private boolean isBooked;
-
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<ReservationProducts> reservationProducts;
 
 //    @ManyToMany
 //    @JoinTable(
