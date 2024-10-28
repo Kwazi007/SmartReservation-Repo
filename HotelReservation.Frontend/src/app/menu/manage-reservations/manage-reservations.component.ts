@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { CurrencyDto } from 'src/proxy/entity-dtos/currency-dto';
 import { PaymentDto } from 'src/proxy/entity-dtos/payment-dto';
 import { ReservationDto } from 'src/proxy/entity-dtos/reservation-dto';
 import { ReservationProductDto } from 'src/proxy/entity-dtos/reservation-product-dto';
 import { RoomDto } from 'src/proxy/entity-dtos/room-dto';
 import { Country } from 'src/proxy/enums/country';
+import { PaymentMethod } from 'src/proxy/enums/payment-method';
 import { RoomType } from 'src/proxy/enums/room-type';
+import { CurrencyService } from 'src/proxy/services/currency.service';
 import { ReservationService } from 'src/proxy/services/reservation.service';
 import { RoomService } from 'src/proxy/services/room.service';
 
@@ -28,21 +31,27 @@ export class ManageReservationsComponent {
 
   selectedReservation: ReservationDto = {} as ReservationDto
 
+  selectedRoom: RoomDto = {} as RoomDto
+
   payment: PaymentDto = {} as PaymentDto
 
+  newPayment: PaymentDto = {} as PaymentDto
+
   subTotalAmountPaid = 0
+
+  totalAmountPaid = 0
 
   discount = 0
 
   totalUSD = 0
+
+  viewTotalUSD = 0
 
   vat = 0
 
   checkInDate: Date
 
   checkOutDate: Date
-
-  totalAmountPaid = 0
 
   selectedReservationProducts: ReservationProductDto = {} as ReservationProductDto
 
@@ -54,6 +63,10 @@ export class ManageReservationsComponent {
 
   rooms: RoomDto[] = []
 
+  currencies: CurrencyDto[] = []
+
+  paymentMethods: PaymentMethod[] = []
+
   createBookingModal = false;
 
   viewBookingModal = false;
@@ -64,6 +77,8 @@ export class ManageReservationsComponent {
 
   activeIndex: number = 0;
 
+  creationTime = new Date()
+
   submitted = false;
 
   cols: any[] = [];
@@ -71,16 +86,28 @@ export class ManageReservationsComponent {
   constructor(public reservationService: ReservationService,
     public roomService: RoomService,
     private messageService: MessageService,
+    private currencyService: CurrencyService
   ) {}
 
   ngOnInit(): void {
 
     this.countries = Object.values(Country);
     this.roomTypes = Object.values(RoomType)
+    this.paymentMethods = Object.values(PaymentMethod)
+
+    this.currencyService.getAllList()
+    .subscribe(res => {
+      this.currencies = res
+      console.log('currencies',this.currencies)
+    })
 
     this.reservationService.getAllList()
     .subscribe(res => {
       this.reservations = res
+      this.reservations.forEach(res => {
+        this.viewTotalUSD = res.totalAmount
+      })
+      console.log('total:',this.viewTotalUSD)
       console.log('reservations:',this.reservations)
     })
 
@@ -100,6 +127,7 @@ export class ManageReservationsComponent {
   addProduct(){
     this.newReservationProduct.reservationId = 0
     this.newReservationProduct.roomId = this.newReservationProduct.room.id
+    this.selectedRoom = this.newReservationProduct.room
     this.newReservationProduct.unitPrice = this.newReservationProduct.room.rate
     this.newReservationProduct.totalAmount = ((this.newReservationProduct.adultPax * this.newReservationProduct.unitPrice)+(this.newReservationProduct.childPax*this.newReservationProduct.unitPrice))
     this.totalUSD += this.newReservationProduct.totalAmount
@@ -110,6 +138,20 @@ export class ManageReservationsComponent {
   this.newReservation.reservationProducts = [... this.newReservation.reservationProducts!, this.newReservationProduct];
   console.log('products:',this.newReservation.reservationProducts)
   this.newReservationProduct = {}
+  }
+
+  createPayment(){
+    this.newPayment.creationTime = new Date().toISOString()
+    this.newPayment.currencyId = this.newPayment.currency.id
+    if (!Array.isArray(this.newReservation.payments)) {
+      this.newReservation.payments = [];
+    }
+  this.newReservation.payments = [... this.newReservation.payments!, this.newPayment];
+  this.newReservation.payments.forEach(payment => {
+    this.totalAmountPaid += payment.amount
+  })
+  console.log('payments:',this.newReservation.payments)
+  this.newPayment = {}
   }
 
   clearProducts(){
@@ -159,6 +201,8 @@ export class ManageReservationsComponent {
           summary: 'Success', 
           life: 3000
         });
+
+
     },
     (error) => {
       this.messageService.add({
@@ -210,6 +254,48 @@ export class ManageReservationsComponent {
   
     // Reset the selected employee
     this.selectedReservation = {} as ReservationDto;
+  
+    // Hide the dialog
+    this.hideDialog();
+  }
+
+  updateRoom() {
+    this.submitted = true;
+    this.selectedRoom.isBooked = true
+  
+    this.roomService.update(this.selectedReservation)
+      .subscribe(
+        res => {
+          console.log(res);
+  
+          // Find the index of the employee we want to update
+          const index = this.rooms.findIndex(x => x.id === this.selectedRoom.id);
+  
+          // Remove the old employee from the array
+          this.rooms.splice(index, 1);
+  
+          // Push the updated employee into the array
+          this.rooms = [...this.rooms, res];
+  
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: res.message,
+            life: 3000
+          });
+        },
+        error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.message,
+            life: 3000
+          });
+        }
+      );
+  
+    // Reset the selected employee
+    this.selectedRoom = {} as RoomDto;
   
     // Hide the dialog
     this.hideDialog();

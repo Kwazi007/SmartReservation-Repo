@@ -38,7 +38,6 @@ import { DashboardsRoutingModule } from '../demo/components/dashboard/dashboard-
 import { CrudRoutingModule } from '../demo/components/pages/crud/crud-routing.module';
 import { ManageCurrenciesComponent } from './manage-currencies/manage-currencies.component';
 import { ManageEmployeesComponent } from './manage-employees/manage-employees.component';
-import { MessageService } from 'primeng/api';
 
 
 @NgModule({

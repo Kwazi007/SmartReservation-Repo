@@ -10,7 +10,7 @@ import { ReservationProductDto } from '../entity-dtos/reservation-product-dto';
 })
 export class ReservationProductsService {
 
-  baseUrl = environment;
+  baseUrl = "http://localhost:8080";
 
   //date = format(new Date(), 'yyyy-MM-dd');
 
@@ -22,6 +22,6 @@ export class ReservationProductsService {
   constructor(private http: HttpClient) { }
 
   getAllList() {
-    return this.http.get<ServiceResponse<ReservationProductDto[]>>(`${this.baseUrl}/getAllReservationProducts`);
+    return this.http.get<ReservationProductDto[]>(`${this.baseUrl}/reservationProducts`);
   }
 }

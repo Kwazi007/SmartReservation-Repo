@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         this.reservationProductService.getAllList()
         .subscribe(res => {
-            this.reservationProducts = res.data
+            this.reservationProducts = res
             console.log('product',this.reservationProducts)
         })
 
@@ -94,18 +94,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.roomService.getAllList()
         .subscribe(res => {
             this.rooms = res
-            let bookedRoomsArray = this.rooms.filter(x => x.booked == true)
+            let bookedRoomsArray = this.rooms.filter(x => x.isBooked == true)
             console.log('rooms:',this.rooms)
             this.bookedRooms = bookedRoomsArray.length
             this.deluxeRooms = (bookedRoomsArray.filter(x => x.roomType == RoomType.DOUBLEDELUXE || x.roomType == RoomType.SINGLEDELUXE)).length
-            let availableRoomsArray = this.rooms.filter(x => x.booked == false)
+            let availableRoomsArray = this.rooms.filter(x => x.isBooked == false)
             this.standardRooms = (availableRoomsArray.filter(x => x.roomType == RoomType.DOUBLE || x.roomType == RoomType.SINGLE)).length
             this.availableRooms = availableRoomsArray.length
         })
 
         this.paymentService.getAllList()
         .subscribe(res => {
-            this.payments = res.data
+            this.payments = res
+            console.log('payments', this.payments)
             let lastRevenue = 0
             let currentPayments = this.payments.filter(x => new Date(x.creationTime).getMonth() == new Date().getMonth())
             currentPayments.forEach(payment => {
@@ -115,7 +116,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
             lastPayments.forEach(payment => {
                 lastRevenue += payment.amount
             })
-            this.revenuePercentage = (((this.revenue - lastRevenue)/lastRevenue)*100)       
+            console.log('last:',  lastRevenue)
+            this.revenuePercentage = (((this.revenue - lastRevenue)/lastRevenue)*100) 
+            console.log('percent:',  this.revenuePercentage)      
             console.log('payments:', this.payments)
         })
     }

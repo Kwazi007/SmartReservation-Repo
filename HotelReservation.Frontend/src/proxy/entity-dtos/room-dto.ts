@@ -5,5 +5,5 @@ export interface RoomDto extends EntityDto<number> {
     roomType?: RoomType
     rate?: number
     pax?: number
-    booked?: boolean
+    isBooked?: boolean
 }

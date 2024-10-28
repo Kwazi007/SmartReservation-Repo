@@ -13,6 +13,9 @@ public class Room {
     private String roomType;
 
     @Column(nullable = false)
+    private Bool isBooked;
+
+    @Column(nullable = false)
     private Integer capacity;
 
     @Column(nullable = false)

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,7 +27,7 @@ public class Room {
     private int pax;
 
     @Column(nullable = false)
-    private boolean isBooked;
+    private Boolean isBooked;
 
 //    @ManyToMany
 //    @JoinTable(

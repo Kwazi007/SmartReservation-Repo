@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -23,7 +24,7 @@ public class Payment {
     @Column(nullable = false)
     private double amount;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int creditHours;
 
     @Column(nullable = true)
@@ -32,14 +33,17 @@ public class Payment {
     @Column(nullable = true)
     private String bank;
 
+    @Column(nullable = false)
+    private LocalDate creationTime;
+
     @ManyToOne
-    @JoinColumn(name = "reservation_id")
     @JsonIgnore
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
     @ManyToOne
-    @JoinColumn(name = "currency_id")
     @JsonIgnore
+    @JoinColumn(name = "currency_id")
     private Currency currency;
 
 //    @OneToMany(mappedBy = "course") // Refers to the "course" field in Enrollment

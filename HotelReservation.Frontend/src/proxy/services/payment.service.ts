@@ -12,7 +12,7 @@ const headers: HttpHeaders = new HttpHeaders()
 })
 export class PaymentService {
 
-  baseUrl = environment;
+  baseUrl = "http://localhost:8080";
 
   //date = format(new Date(), 'yyyy-MM-dd');
 
@@ -27,25 +27,25 @@ export class PaymentService {
     console.log(itemDto)
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.post<any>(`${this.baseUrl}/createPayment`, body, { headers });
+    return this.http.post<any>(`${this.baseUrl}/payment`, body, { headers });
   }
 
   update(itemDto: any) {
     console.log(itemDto)
     var body = JSON.stringify(itemDto);
     console.log(body)
-    return this.http.put<any>(`${this.baseUrl}/updatePayment`, body, { headers });
+    return this.http.put<any>(`${this.baseUrl}/payment`, body, { headers });
   }
 
   delete(id: number) {
-    return this.http.delete<any>(`${this.baseUrl}/deletePayment/${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/payment/${id}`);
   }
 
   get(id: number) {
-    return this.http.get<any>(`${this.baseUrl}/getPayment/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/payment/${id}`);
   }
 
   getAllList() {
-    return this.http.get<ServiceResponse<PaymentDto[]>>(`${this.baseUrl}/getAllPayments`);
+    return this.http.get<PaymentDto[]>(`${this.baseUrl}/payments`);
   }
 }
