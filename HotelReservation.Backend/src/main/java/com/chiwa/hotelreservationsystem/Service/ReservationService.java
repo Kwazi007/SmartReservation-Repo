@@ -75,6 +75,7 @@ public class ReservationService implements IReservationService {
             newPayment.setBank(payment.getBank());
             newPayment.setCurrency(payment.getCurrency());
             newPayment.setCardNo(payment.getCardNo());
+            newPayment.setCreationTime(payment.getCreationTime());
             newPayment.setCreditHours(payment.getCreditHours());
 
             paymentRepo.save(newPayment);

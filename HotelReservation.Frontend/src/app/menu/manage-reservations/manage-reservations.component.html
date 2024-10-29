@@ -585,6 +585,8 @@
                                                     [(ngModel)]="
                                                         newReservationProduct.roomType
                                                     "
+
+                                                    (onChange)="onChange()"
                                                     [options]="
                                                         roomTypes
                                                     "
@@ -652,7 +654,7 @@
                                                         true
                                                     "
                                                     [options]="
-                                                        rooms
+                                                        filtereRooms
                                                     "
                                                     placeholder="Select Room No"
                                                     optionLabel="id"

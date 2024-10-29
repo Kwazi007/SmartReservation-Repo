@@ -63,6 +63,8 @@ export class ManageReservationsComponent {
 
   rooms: RoomDto[] = []
 
+  filtereRooms:RoomDto[] = []
+
   currencies: CurrencyDto[] = []
 
   paymentMethods: PaymentMethod[] = []
@@ -113,7 +115,9 @@ export class ManageReservationsComponent {
 
     this.roomService.getAllList()
     .subscribe(res => {
+      console.log('rooms',res)
       this.rooms = res
+      this.filtereRooms = this.rooms.filter(x => x.isBooked == false)
       console.log('rooms',this.rooms)
     })
   }
@@ -171,6 +175,11 @@ export class ManageReservationsComponent {
       this.editBookingModal = true;
   }
 
+  onChange(){
+    console.log('enter')
+    this.filtereRooms = this.rooms.filter(x => x.roomType == this.newReservationProduct.roomType && x.isBooked == false)
+  }
+
   delete(id: number) {
     this.deleteSelectedReservation = id;
     this.deleteModal = true;
@@ -186,6 +195,7 @@ export class ManageReservationsComponent {
       this.newReservation.childPax += res.childPax
       this.newReservation.totalAmount += res.totalAmount
     })
+    this.selectedRoom.isBooked = true
     console.log('res:',this.newReservation)
     this.submitted = true;
     
@@ -213,6 +223,7 @@ export class ManageReservationsComponent {
     });
 
     this.newReservation = {} as ReservationDto;
+    this.updateRoom()
     this.hideDialog();
   }
 
@@ -262,8 +273,9 @@ export class ManageReservationsComponent {
   updateRoom() {
     this.submitted = true;
     this.selectedRoom.isBooked = true
+    console.log('enterer')
   
-    this.roomService.update(this.selectedReservation)
+    this.roomService.update(this.selectedRoom)
       .subscribe(
         res => {
           console.log(res);

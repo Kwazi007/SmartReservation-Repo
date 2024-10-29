@@ -5,7 +5,8 @@ import { ServiceResponse } from '../entity-dtos/service-response';
 import { RoomDto } from '../entity-dtos/room-dto';
 
 const headers: HttpHeaders = new HttpHeaders()
-  .set('Content-Type', 'application/json, charset=utf-8');
+.set('Content-Type', 'application/json')
+.set('Accept', 'application/json');
 
 @Injectable({
   providedIn: 'root'

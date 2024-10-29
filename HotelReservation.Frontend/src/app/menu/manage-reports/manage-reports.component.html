@@ -1,1 +1,228 @@
-<p>manage-reports works!</p>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+
+            <div class="formgrid grid">
+
+                    <div class="field col-3">
+                        <span class="p-float-label">
+                            <p-calendar
+                                appendTo="body"
+                                [(ngModel)]="
+                                    checkInDate
+                                "
+                                dateFormat="MM d, y"
+                            ></p-calendar>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    submitted &&
+                                    !checkInDate
+                                "
+                                >Date is
+                                required.</small
+                            >
+                            <label
+                                for="creationTime"
+                                >Check In
+                                Date</label
+                            >
+                        </span>
+                    </div>
+                    <div class="field col-3">
+                        <span class="p-float-label">
+                            <p-calendar
+                                appendTo="body"
+                                [(ngModel)]="
+                                    checkOutDate
+                                "
+                                dateFormat="MM d, y"
+                            ></p-calendar>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    submitted &&
+                                    !checkOutDate
+                                "
+                                >Date is
+                                required.</small
+                            >
+                            <label
+                                for="creationTime"
+                                >Check Out
+                                Date</label
+                            >
+                        </span>
+                    </div>
+
+                    <div class="field col-3">
+                        <button
+                            pButton
+                            label="Generate Report"
+                            icon="pi pi-file"
+                            class="p-button-success mr-2"
+                            (click)="filterRes()"
+                        ></button>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <p-dialog
+            [(visible)]="reportModal"
+            [style]="{ width: '90%' }"
+            [modal]="true"
+            class="p-fluid">
+                    <ng-template pTemplate="content">
+                        <div class="col-12">
+                            <p-table
+                                #dt1
+                                [value]="filteredReservations"
+                                [columns]="cols"
+                                responsiveLayout="scroll"
+                                styleClass="p-datatable-striped"
+                            >
+                                <ng-template pTemplate="caption">
+                                    <div
+                                        class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+                                    >
+                                        <h5 class="m-0"><b>Bookings From:</b> {{checkInDate | date : "MMMM d, y"}} to {{checkOutDate | date : "MMMM d, y"}}</h5>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr style="height: 0.25rem; font-size: 12px">
+                                        <th
+                                            style="
+                                                font-size: larger;
+                                                background-color: grey;
+                                                color: white;
+                                            "
+                                        >
+                                            Voucher No
+                                        </th>
+                                        <th
+                                            style="
+                                                font-size: larger;
+                                                background-color: grey;
+                                                color: white;
+                                            "
+                                        >
+                                            Name
+                                        </th>
+                                        <th
+                                            style="
+                                                font-size: larger;
+                                                background-color: grey;
+                                                color: white;
+                                            "
+                                        >
+                                            email
+                                        </th>
+                                        <th
+                                            style="
+                                                font-size: larger;
+                                                background-color: grey;
+                                                color: white;
+                                            "
+                                        >
+                                            CheckIn Date
+                                        </th>
+                                        <th
+                                            style="
+                                                font-size: larger;
+                                                background-color: grey;
+                                                color: white;
+                                            "
+                                        >CheckOut Date
+                                        </th>
+                                        <th
+                                            style="
+                                                font-size: larger;
+                                                background-color: grey;
+                                                color: white;
+                                            "
+                                        >
+                                            Child Pax
+                                        </th>
+                                        <th
+                                            style="
+                                                font-size: larger;
+                                                background-color: grey;
+                                                color: white;
+                                            "
+                                        >Adult Pax
+                                        </th>
+                                        <th
+                                            style="
+                                                font-size: larger;
+                                                background-color: grey;
+                                                color: white;
+                                            "
+                                        >Total Amount
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-reservation>
+                                    <tr style="height: 0.25rem; font-size: 11px">
+                                        <td style="width: 10%; min-width: 10rem">
+                                            <span class="p-column-title"
+                                                >Voucher No</span
+                                            >
+                                            {{ reservation.id }}
+                                        </td>
+                                        <td style="width: 15%; min-width: 10rem">
+                                            <span class="p-column-title">Name</span>
+                                            {{ reservation.firstName }}
+                                            {{ reservation.lastName }}
+                                        </td>
+                                        <td style="width: 15%; min-width: 10rem">
+                                            <span class="p-column-title">Name</span>
+                                            {{ reservation.email }}
+                                        </td>
+                                        <td style="width: 10%; min-width: 10rem">
+                                            <span class="p-column-title"
+                                                >CheckIn</span
+                                            >
+                                            {{
+                                                reservation.checkInDate
+                                                    | date : "MMMM d, y"
+                                            }}
+                                        </td>
+                                        <td style="width: 10%; min-width: 10rem">
+                                            <span class="p-column-title"
+                                                >CheckOut</span
+                                            >
+                                            {{
+                                                reservation.checkOutDate
+                                                    | date : "MMMM d, y"
+                                            }}
+                                        </td>
+                                        <td style="width: 10%; min-width: 10rem">
+                                            <span class="p-column-title"
+                                                >childPax</span
+                                            >
+                                            {{
+                                                reservation.childPax
+                                            }}
+                                        </td>
+                                        <td style="width: 10%; min-width: 10rem">
+                                            <span class="p-column-title"
+                                                >adultPax</span
+                                            >
+                                            {{
+                                                reservation.adultPax
+                                            }}
+                                        </td>
+                                        <td style="width: 5%; min-width: 10rem">
+                                            <span class="p-column-title"
+                                                >Amount</span
+                                            >
+                                            {{ reservation.totalAmount | currency }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </ng-template>
+    </p-dialog>
+</div>

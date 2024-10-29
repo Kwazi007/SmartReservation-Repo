@@ -33,7 +33,7 @@ public class Payment {
     @Column(nullable = true)
     private String bank;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate creationTime;
 
     @ManyToOne

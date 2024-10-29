@@ -1,5 +1,6 @@
 package com.chiwa.hotelreservationsystem.Model;
 
+import com.chiwa.hotelreservationsystem.enums.ROOMTYPE;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class Room {
     private Long id;
 
     @Column(nullable = false)
-    private String roomType;
+    private ROOMTYPE roomType;
 
     @Column(nullable = false)
     private double rate;

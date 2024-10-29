@@ -36,11 +36,13 @@ import { DashboardsRoutingModule } from '../demo/components/dashboard/dashboard-
 import { CrudRoutingModule } from '../demo/components/pages/crud/crud-routing.module';
 import { ManageReservationsComponent } from './manage-reservations/manage-reservations.component';
 import { MenuModule } from 'primeng/menu';
+import { ManageReportsComponent } from './manage-reports/manage-reports.component';
 
 
 @NgModule({
   declarations: [
-    ManageReservationsComponent
+    ManageReservationsComponent,
+    ManageReportsComponent
   ],
   imports: [
     CommonModule,

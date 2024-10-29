@@ -85,6 +85,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         .subscribe(res => {
             this.reservations = res
             let currentReservation = this.reservations.filter(x => new Date(x.checkInDate) <= new Date() && new Date(x.checkOutDate) >= new Date())
+            console.log('reservations:',currentReservation)
             currentReservation.forEach(res => {
                 this.guests += res.adultPax + res.childPax
             })

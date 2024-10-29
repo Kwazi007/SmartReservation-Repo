@@ -34,6 +34,9 @@
                                     Room No <p-sortIcon field="pax"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="pax" style="font-size: larger; background-color: grey; color: white;">
+                                    Room Type <p-sortIcon field="pax"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="pax" style="font-size: larger; background-color: grey; color: white;">
                                     Is Booked <p-sortIcon field="pax"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="pax" style="font-size: larger; background-color: grey; color: white;">
@@ -53,6 +56,10 @@
                                 <td style="width: 16.666%; min-width: 10rem">
                                     <span class="p-column-title">Id</span>
                                     {{ room.id }}
+                                </td>
+                                <td style="width: 16.666%; min-width: 10rem">
+                                    <span class="p-column-title">Room Type</span>
+                                    {{ room.roomType }}
                                 </td>
                                 <td style="width: 16.666%; min-width: 10rem">
                                     <span class="p-column-title">Name</span>

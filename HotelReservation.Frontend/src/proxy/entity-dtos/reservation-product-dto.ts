@@ -13,4 +13,5 @@ export interface ReservationProductDto extends EntityDto<number> {
     childPax?: number
     totalAmount?: number
     room?: RoomDto
+    reservation?: ReservationDto
 }
